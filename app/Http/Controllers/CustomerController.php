@@ -52,7 +52,7 @@ class CustomerController extends Controller
                 'type' => $request->type,
                 'address' => $request->address
         ]);
-        return response(["Created" ,Response::HTTP_ACCEPTED]);
+        return response(["Created" ,'customer' => $customer ,Response::HTTP_ACCEPTED]);
     }
 
     /**
