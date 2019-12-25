@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
+use App\Customer;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,14 +14,37 @@ class CustomerTest extends TestCase
      /** @test */
     public function only_admin_can_create_customer()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
-           $customer = factory(\App\Customer::class);
-            $response = $this->actingAs($user, 'api')->json('POST', 'api/customers',$customer->toArray());
-       
+           $customer=[
+            'user_id' => 1,
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'phone' =>$this->faker->phoneNumber ,
+            'address' =>$this->faker->address ,
+            'type' =>  $this->faker->randomElement(['individual', 'corporate'])];
+
+
+            $response = $this->actingAs($user, 'api')->json('POST', 'api/customers',$customer);
             $response->assertStatus(200)
-             ->assertJson([
-                'created' => true,
-            ]);
+             ->assertJson($customer);
+    }
+    /** @test */
+    public function only_admin_can_update_customer()
+    {
+        // $this->withoutExceptionHandling();
+        $customer = factory(Customer::class)->create();
+           $attributes=[
+            'user_id' => 1,
+            'name' => "chanaged",
+            'email' => "chanaged",
+            'phone' =>"chanaged" ,
+            'address' =>"chanaged" ,
+            'type' =>  "chanaged"];
+
+            
+            $response = $this->actingAs($customer->user, 'api')->put($customer->path(),$attributes);
+            $response->assertStatus(200)
+             ->assertJson($customer);
     }
 }
