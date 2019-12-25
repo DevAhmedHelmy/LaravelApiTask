@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Action;
 use Illuminate\Http\Request;
+use App\Http\Requests\ActionRequest;
 use App\Http\Resources\ActionResource;
 class ActionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +38,9 @@ class ActionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ActionRequest $request)
     {
-        //
+        $validated = $request->validated();
     }
 
     /**
