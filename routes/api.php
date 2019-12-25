@@ -29,6 +29,5 @@ Route::group([
 
 Route::apiResource('customers', 'CustomerController');
 
-Route::get('actions', 'ActionController@index');
-Route::post('actions', 'ActionController@store');
+Route::apiResource('actions', 'ActionController');
  

@@ -63,12 +63,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        // return new CustomerResource($customer);
-        if(!\Auth::id() == $customer->user_id || \Auth::id() == $customer->id)
-        {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-            
-        }
+       
         return new CustomerResource($customer);
 
     }
@@ -93,11 +88,7 @@ class CustomerController extends Controller
      */
     public function update(CustomerRequest $request, Customer $customer)
     {
-        if(!\Auth::id() == $customer->user_id)
-        {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-                       
-        } 
+        
          $customer->update([
                 'name' => $request->name,
                 'user_id' => \Auth::id(),
@@ -117,10 +108,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        if(!\Auth::id() == $customer->user_id)
-        {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
+         
         $customer->delete();
         return response('Deleted',Response::HTTP_ACCEPTED);
 

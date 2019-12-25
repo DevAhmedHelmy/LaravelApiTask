@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ActionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomerResource extends JsonResource
@@ -22,6 +23,7 @@ class CustomerResource extends JsonResource
             'address' => $this->address,
             'type' => $this->type,
             'user' => $this->user->name,
+            'actions' => ActionResource::collection($this->actions),
             'created_at' => $this->created_at->diffForHumans(),
         ];
     }

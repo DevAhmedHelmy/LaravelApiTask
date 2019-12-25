@@ -6,6 +6,8 @@ use App\Action;
 use Illuminate\Http\Request;
 use App\Http\Requests\ActionRequest;
 use App\Http\Resources\ActionResource;
+use Symfony\Component\HttpFoundation\Response;
+
 class ActionController extends Controller
 {
     public function __construct()
@@ -41,6 +43,11 @@ class ActionController extends Controller
     public function store(ActionRequest $request)
     {
         $validated = $request->validated();
+        $action = auth()->user()->actions()->create([
+            'action' => $request->action,
+            'customer_id' => $request->customer_id
+        ]);
+        return response(["Created" ,Response::HTTP_ACCEPTED]);
     }
 
     /**
@@ -51,7 +58,7 @@ class ActionController extends Controller
      */
     public function show(Action $action)
     {
-        //
+        return new ActionResource($action);
     }
 
     /**
@@ -74,7 +81,13 @@ class ActionController extends Controller
      */
     public function update(Request $request, Action $action)
     {
-        //
+        $validated = $request->validated();
+        $action->update([
+            'user_id' => \Auth::id(),
+            'action' => $request->action,
+            'customer_id' => $request->customer_id
+        ]);
+        return response(["Updated" ,Response::HTTP_ACCEPTED]);
     }
 
     /**
@@ -85,6 +98,7 @@ class ActionController extends Controller
      */
     public function destroy(Action $action)
     {
-        //
+        $customer->delete();
+        return response('Deleted',Response::HTTP_ACCEPTED);
     }
 }
