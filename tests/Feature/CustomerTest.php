@@ -34,16 +34,18 @@ class CustomerTest extends TestCase
     {
         // $this->withoutExceptionHandling();
         $customer = factory(Customer::class)->create();
-           $attributes=[
-            'user_id' => 1,
-            'name' => "chanaged",
-            'email' => "chanaged",
-            'phone' =>"chanaged" ,
-            'address' =>"chanaged" ,
-            'type' =>  "chanaged"];
-
+           
+        dd("hello");
+        die();
             
-            $response = $this->actingAs($customer->user, 'api')->put($customer->path(),$attributes);
+            $response = $this->actingAs($customer->user, 'api')->put(route('customers.update',['customer'=>$customer->id]),$attributes=[
+                'user_id' => 1,
+                'name' => "chanaged",
+                'email' => "chanaged",
+                'phone' =>"chanaged" ,
+                'address' =>"chanaged" ,
+                'type' =>  "chanaged"]);
+            
             $response->assertStatus(200)
              ->assertJson($customer);
     }
