@@ -35,8 +35,7 @@ class CustomerTest extends TestCase
         // $this->withoutExceptionHandling();
         $customer = factory(Customer::class)->create();
            
-        dd("hello");
-        die();
+        
             
             $response = $this->actingAs($customer->user, 'api')->put(route('customers.update',['customer'=>$customer->id]),$attributes=[
                 'user_id' => 1,
