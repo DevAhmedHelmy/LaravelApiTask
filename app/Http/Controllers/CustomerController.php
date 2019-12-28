@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerRequest;
-use App\Http\Resources\CustomerResource;
-use Symfony\Component\HttpFoundation\Response;
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CustomerRequest;
+use App\Http\Resources\CustomerResource;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response;
 
 class CustomerController extends Controller
 {
@@ -41,10 +43,22 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CustomerRequest $request)
+    public function store(Request $request)
     {
-         
-        $validated = $request->validated();
+        //  validation 
+        $validator = Validator::make($request->all(), [
+            'name'      => 'required',
+            'email'     => 'required|email|unique:customers',
+            'phone'     => 'required',
+            'address'   => 'required',
+            'type'      => ['required',Rule::in(['individual', 'corporate'])],
+        ]);
+        if ($validator->fails()) {
+             
+            return response(["Error" ,'errors' => $validator->errors() ,422]);
+        }
+        
+        // create new customer
         $customer = auth()->user()->customers()->create([
             'name' => $request->name,
                 'email' => $request->email,
@@ -52,8 +66,8 @@ class CustomerController extends Controller
                 'type' => $request->type,
                 'address' => $request->address
         ]);
-        return response()->json($customer);
-        // return response(["Created" ,'customer' => $customer ,Response::HTTP_ACCEPTED]);
+       
+        return response(["Created" ,'customer' => $customer ,Response::HTTP_ACCEPTED]);
     }
 
     /**

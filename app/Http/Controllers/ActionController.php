@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ActionRequest;
 use App\Http\Resources\ActionResource;
 use Symfony\Component\HttpFoundation\Response;
-
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 class ActionController extends Controller
 {
     public function __construct()
@@ -40,9 +41,17 @@ class ActionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ActionRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
+        $validator = Validator::make($request->all(), [
+            'action'      => ['required',Rule::in(['call', 'visit'])],
+             
+            'customer_id'   => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+             
+            return response(["Error" ,'errors' => $validator->errors() ,422]);
+        }
         $action = auth()->user()->actions()->create([
             'action' => $request->action,
             'customer_id' => $request->customer_id

@@ -27,7 +27,7 @@ class ActionRequest extends FormRequest
         return [
              
             'action'      => ['required',Rule::in(['call', 'visit'])],
-            'user_id'   => 'required|integer',
+             
             'customer_id'   => 'required|integer',
         ];
     }
