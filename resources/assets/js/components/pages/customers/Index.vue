@@ -136,7 +136,7 @@
             :disabled="!valid"
               color="primary"
               class="mr-4"
-              
+              @click.prevent="updateCustomer(form.id)"
             >
               Save
             </v-btn>
@@ -154,10 +154,10 @@ export default {
     data(){
     return{
        valid: true,
-        form:{name:'', email:'', phone:'', address:'',type:''},
+        form:{id:'',name:'', email:'', phone:'', address:'',type:''},
         errors:[],
         customers:[],
-        customer:'',
+        customerId:'',
         dialog:false,
         items: [
           'individual',
@@ -190,17 +190,36 @@ export default {
             });
         },
         deleteCustomer(customerId){
-            axios.delete('/customers/'+customerId)
+            axios.delete('/api/customers/'+customerId)
             .then(this.getCustomers())
           },
           editCustomer(customerId){
             this.dialog=true;
-            axios.get('/customers/'+customerId)
-            .then(res =>{ this.form.name = res.data.name})
+            axios.get('/api/customers/'+customerId)
+            .then(res =>{ 
+                this.form.name = res.data.data.name,
+                this.form.email = res.data.data.email,
+                this.form.phone = res.data.data.phone,
+                this.form.address = res.data.data.address,
+                this.form.type = res.data.data.type,
+                this.form.id = res.data.data.id
+                })
+          },
+          updateCustomer(customerId){
+            
+            axios.patch('/api/customers/'+customerId,this.form)
+            .then(res => {
+                console.log(res.data) 
+                 
+              })
+        .catch(function (error) {
+              this.errors = error.response.data.errors
+              console.log(error.response.data.errors);
+          });
           },
         getCustomer(customerId){
             
-            axios.get('/customers/'+customerId)
+            axios.get('/api/customers/'+customerId)
             .then(res => this.customer = res.data.data)
           },
            validate () {
