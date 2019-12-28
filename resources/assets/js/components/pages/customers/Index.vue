@@ -6,9 +6,10 @@
     <template v-slot:default>
       <thead>
       <router-link style="cursor:pointer" :to="{name:'AddCustomer'}" tag="span">
-                            <v-btn icon>
-                                <v-icon>fa fa-plus</v-icon>
-                            </v-btn>
+      <div class="my-2">
+        <v-btn small color="primary"><v-icon left>fa fa-plus </v-icon> Add New Customer</v-btn>
+      </div>
+                            
                         </router-link>
         <tr>
           <th style="5%;">#</th>
@@ -16,7 +17,9 @@
           <th class="text-center">Email</th>
           <th class="text-center">Phone</th>
           <th class="text-center">Address</th>
-          <th class="text-center">Control</th>
+          <th class="text-center">Show</th>
+          <th class="text-center">Edit</th>
+          <th class="text-center">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -27,11 +30,25 @@
           <td>{{customer.phone}}</td>
           <td>{{customer.address}}</td>
           <td>
-<router-link style="cursor:pointer" :to="{name:'ShowCustomer', params:{id:customer.id}}" tag="span">
-                            <v-btn icon>
-                                <v-icon>fa fa-eye</v-icon>
-                            </v-btn>
-                        </router-link>
+              <router-link style="cursor:pointer" :to="{name:'ShowCustomer', params:{id:customer.id}}" tag="span">
+                  <v-btn icon>
+                      <v-icon>fa fa-eye</v-icon>
+                  </v-btn>
+              </router-link>
+          </td>
+          <td>
+              <router-link style="cursor:pointer" :to="{name:'EditCustomer', params:{id:customer.id}}" tag="span">
+                  <v-btn icon>
+                      <v-icon>fa fa-edit</v-icon>
+                  </v-btn>
+              </router-link>
+          </td>
+          <td>
+              
+              <v-btn icon>
+                  <v-icon @click="deleteCustomer(customer.id)">fa fa-trash</v-icon>
+              </v-btn>
+            
           </td>
         </tr>
       </tbody>
