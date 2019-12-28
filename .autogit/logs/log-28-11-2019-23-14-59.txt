@@ -1,0 +1,16 @@
+-------------------- Auto-Git Log --------------------
+		Sat Dec 28 2019 23:14:59 GMT+0200 (Eastern European Standard Time)
+------------------------------------------------------
+
+Modified files:
+* public/js/app.js
+* resources/assets/js/components/pages/customers/Index.vue
+
+
+Created files:
+
+
+Deleted files:
+
+
+Renamed files:
