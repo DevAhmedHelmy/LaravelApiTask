@@ -60,19 +60,25 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="loggedIn" />
-      <v-toolbar-title>CRM {{user.name}}</v-toolbar-title>
+      <v-toolbar-title>CRM</v-toolbar-title>
       
        <v-spacer></v-spacer>
       <v-toolbar-items>
+<router-link class="navLink" v-if="!loggedIn" to="/login" style="cursor:pointer" tag="span"> 
+                   
+                    <span>Login</span>
+                     
+                   
+              </router-link>
+              <router-link class="navLink" v-if="loggedIn" to="/logout" style="cursor:pointer" tag="span"> 
+                   
+                    <span>logout</span>
+                     
+                   
+              </router-link>
+         
 
-        <router-link
-        class="navLink"
-          v-for="item in items"
-          :key="item.title"
-          :to="item.to"
-          v-if="item.show">
-          <v-btn text>{{item.title}}</v-btn>
-        </router-link>
+
       </v-toolbar-items>
 
     </v-app-bar>
