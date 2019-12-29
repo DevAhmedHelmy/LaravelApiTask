@@ -6,7 +6,7 @@
     ref="form"
     v-model="valid"
     lazy-validation
-    
+
   >
     <v-text-field
       v-model="form.name"
@@ -15,7 +15,7 @@
       label="Name"
       required
     ></v-text-field>
-     
+
     <v-text-field
       v-model="form.email"
       :rules="emailRules"
@@ -24,7 +24,7 @@
     ></v-text-field>
 <v-text-field
       v-model="form.phone"
-       
+
        :rules="[v => !!v || 'Item is required']"
       label="Phone Number"
       required
@@ -32,7 +32,7 @@
     <v-text-field
       v-model="form.address"
        :rules="[v => !!v || 'Item is required']"
-       
+
       label="Address"
       required
     ></v-text-field>
@@ -44,7 +44,7 @@
       required
     ></v-select>
 
-     
+
 
      <v-btn
      :disabled="!valid"
@@ -62,8 +62,8 @@
     >
       Reset Form
     </v-btn>
-    
-    
+
+
   </v-form>
   </v-flex>
   </v-layout>
@@ -75,11 +75,11 @@
       return{
         valid: true,
         form:{name:'', email:'', phone:'', address:'',type:''},
-        
+
         items: [
           'individual',
           'corporate',
-          
+
         ],
         nameRules: [
           v => !!v || 'Name is required',
@@ -89,15 +89,15 @@
           v => !!v || 'E-mail is required',
           v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
-         
+
         errors:[]
       }
-      
-       
+
+
     },
 
     methods: {
-      
+
       validate () {
         if (this.$refs.form.validate()) {
           this.snackbar = true
@@ -112,15 +112,15 @@
 
       // save function
       storeCustomer(){
-        
+
         axios.post('/api/customers',this.form)
         .then(res => {
-                console.log(res.data) 
-                 
+                this.$route.push({name:'customers'})
+
               })
         .catch(function (error) {
               this.errors = error.response.data.errors
-              console.log(error.response.data.errors);
+
           });
       },
     },

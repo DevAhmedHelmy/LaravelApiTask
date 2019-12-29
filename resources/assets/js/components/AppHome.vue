@@ -12,11 +12,11 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>
-              <router-link class="link" to="/customers" style="cursor:pointer" tag="span"> 
-                   
+              <router-link class="link" to="/customers" style="cursor:pointer" tag="span">
+
                     <span>Customers</span>
-                     
-                   
+
+
               </router-link>
             </v-list-item-title>
           </v-list-item-content>
@@ -27,11 +27,11 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>
-              <router-link class="link" to="/about" style="cursor:pointer" tag="span"> 
-                   
+              <router-link class="link" to="/about" style="cursor:pointer" tag="span">
+
                     <span>About</span>
-                     
-                   
+
+
               </router-link>
             </v-list-item-title>
           </v-list-item-content>
@@ -42,11 +42,11 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>
-              <router-link class="link" to="/contact" style="cursor:pointer" tag="span"> 
-                   
+              <router-link class="link" to="/contact" style="cursor:pointer" tag="span">
+
                     <span>Contact Us</span>
-                     
-                   
+
+
               </router-link>
             </v-list-item-title>
           </v-list-item-content>
@@ -61,24 +61,34 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="loggedIn" />
       <v-toolbar-title>CRM</v-toolbar-title>
-      
+
        <v-spacer></v-spacer>
       <v-toolbar-items>
-<router-link class="navLink" v-if="!loggedIn" to="/login" style="cursor:pointer" tag="span"> 
-                   
+<router-link class="navLink" v-if="!loggedIn" to="/login" style="cursor:pointer" tag="span">
+
                     <span>Login</span>
-                     
-                   
-              </router-link>
-              <router-link class="navLink" v-if="loggedIn" to="/logout" style="cursor:pointer" tag="span"> 
-                   
-                    <span>logout</span>
-                     
-                   
-              </router-link>
-         
 
 
+              </router-link>
+          <v-menu offset-y v-if="loggedIn">
+              <template v-slot:activator="{ on }">
+                  <v-btn
+                      color="primary"
+                      dark
+                      v-on="on"
+                  >
+                      {{user.name}}
+                  </v-btn>
+              </template>
+              <v-list>
+                  <router-link class="navLink" v-if="loggedIn" to="/logout" style="cursor:pointer" tag="span">
+                  <v-list-item>
+                      <v-list-item-title>Logout</v-list-item-title>
+                  </v-list-item>
+                  </router-link>
+              </v-list>
+          </v-menu>
+          
       </v-toolbar-items>
 
     </v-app-bar>
@@ -90,7 +100,7 @@
           justify="center"
         >
           <v-col class="text-center">
-             
+
 
              <router-view></router-view>
           </v-col>
@@ -116,16 +126,16 @@
       loggedIn:User.loggedIn(),
       user:'',
       items:[
-           
+
           {title:'Login', to:'/login',show:!User.loggedIn()},
-           
+
           {title:'Logout', to:'/logout',show:User.loggedIn()},
         ]
       }
-      
+
     },
     created(){
-    
+
       this.getUser();
       EventBus.$on('logout',()=>{
         User.logout();
@@ -133,7 +143,7 @@
       });
 
 
-      
+
     },
     methods:{
       getUser(){
@@ -143,9 +153,9 @@
       }
     }
 
-    
 
-    
+
+
   }
 </script>
 
@@ -163,5 +173,5 @@
     text-align: left;
 
   }
-   
+
 </style>
