@@ -49,7 +49,7 @@ class CustomerController extends Controller {
 			]);
 		if ($validator->fails()) {
 
-			return response(["Error", 'errors' => $validator->errors(), 422]);
+			return response(['errors' => $validator->errors()]);
 		}
 
 		// create new customer
@@ -61,7 +61,11 @@ class CustomerController extends Controller {
 				'address' => $request->address,
 			]);
 
+		// if($customer){
+			// return redirect()->route('customers.index');
+		// }
 		return response(["Created", 'customer' => $customer, Response::HTTP_ACCEPTED]);
+
 	}
 
 	/**

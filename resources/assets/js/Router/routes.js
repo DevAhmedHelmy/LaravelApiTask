@@ -51,7 +51,7 @@ let routes = [
         component: require('../components/pages/customers/Edit.vue').default
     },
     {
-        path: '*',
+        path: '/',
         redirect: {
           name: 'customers',
         },

@@ -19,20 +19,21 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function () {
-    
-    
+
+
     Route::get('user','AuthController@user');
     Route::post('logout', 'AuthController@logout');
-    
-   
+
+
 
 });
 
- 
 
-        Route::apiResource('customers', 'CustomerController');
-        Route::apiResource('actions', 'ActionController');
-   
 
- 
- 
+    Route::apiResource('customers', 'CustomerController');
+    Route::apiResource('actions', 'ActionController');
+
+
+
+
+

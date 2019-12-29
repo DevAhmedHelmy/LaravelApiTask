@@ -83,7 +83,7 @@
         ],
         nameRules: [
           v => !!v || 'Name is required',
-          v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+          v => (v && v.length <= 50) || 'Name must be less than 10 characters',
         ],
         emailRules: [
           v => !!v || 'E-mail is required',
@@ -112,16 +112,14 @@
 
       // save function
       storeCustomer(){
-
-        axios.post('/api/customers',this.form)
-        .then(res => {
-                this.$route.push({name:'customers'})
-
-              })
-        .catch(function (error) {
-              this.errors = error.response.data.errors
-
-          });
+        axios.post('/api/customers', this.form)
+        .then(response => { 
+            window.location.href = "customers";
+        })
+        .catch(error => {
+          console.log(error.response);
+          this.errors = error.response.data.errors
+        })
       },
     },
   };
