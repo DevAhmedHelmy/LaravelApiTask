@@ -6,6 +6,7 @@ use JWTAuth;
 use Illuminate\Http\Request;
 // use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 class AuthController extends Controller
 {
     /**
@@ -84,6 +85,11 @@ class AuthController extends Controller
             'expires_in' => auth('api')->factory()->getTTL() * 60,
             'user' => auth()->user()->name
          ]);
+    }
+
+    public function user()
+    {
+        return response(["Created" ,'user' => \Auth::user() ,Response::HTTP_ACCEPTED]);
     }
     
 }

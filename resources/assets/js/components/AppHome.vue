@@ -60,7 +60,8 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="loggedIn" />
-      <v-toolbar-title>CRM</v-toolbar-title>
+      <v-toolbar-title>CRM {{user.name}}</v-toolbar-title>
+      
        <v-spacer></v-spacer>
       <v-toolbar-items>
 
@@ -107,9 +108,10 @@
       return{
       drawer: null,
       loggedIn:User.loggedIn(),
+      user:'',
       items:[
            
-          {title:'Login', to:'/login',show: !User.loggedIn()},
+          {title:'Login', to:'/login',show:!User.loggedIn()},
            
           {title:'Logout', to:'/logout',show:User.loggedIn()},
         ]
@@ -118,14 +120,22 @@
     },
     created(){
     
-
+      this.getUser();
       EventBus.$on('logout',()=>{
         User.logout();
         this.$router.push({name:'login'})
       });
 
+
       
     },
+    methods:{
+      getUser(){
+        axios.get('/api/auth/user').then(response => {
+              this.user =response.data.user;
+            })
+      }
+    }
 
     
 

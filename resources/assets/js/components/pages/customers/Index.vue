@@ -182,18 +182,28 @@ export default {
         },
       methods:{
         getCustomers(){
+          if(User.loggedIn()){
             axios.get('/api/customers')
             .then(res => this.customers = res.data.data)
             .catch(function (error) {
                 this.errors = error.response.data.errors
                 console.log(error.response.data.errors);
             });
+          }else{
+            this.$router.push({name:'login'})
+          }
+            
         },
         deleteCustomer(customerId){
+          if(User.loggedIn()){
             axios.delete('/api/customers/'+customerId)
-            .then(this.getCustomers())
+            .then(this.getCustomers());
+            }else{
+            this.$router.push({name:'login'})
+          }
           },
           editCustomer(customerId){
+            if(User.loggedIn()){
             this.dialog=true;
             axios.get('/api/customers/'+customerId)
             .then(res =>{ 
@@ -204,9 +214,12 @@ export default {
                 this.form.type = res.data.data.type,
                 this.form.id = res.data.data.id
                 })
+                }else{
+            this.$router.push({name:'login'})
+          }
           },
           updateCustomer(customerId){
-            console.log(customerId)
+            if(User.loggedIn()){
             axios.put('/api/customers/'+customerId,this.form)
             .then(res => {
                 this.getCustomers();
@@ -217,11 +230,17 @@ export default {
               this.errors = error.response.data.errors
               console.log(error.response.data.errors);
           });
+          }else{
+            this.$router.push({name:'login'})
+          }
           },
         getCustomer(customerId){
-            
+            if(User.loggedIn()){
             axios.get('/api/customers/'+customerId)
             .then(res => this.customer = res.data.data)
+            }else{
+            this.$router.push({name:'login'})
+          }
           },
            validate () {
         if (this.$refs.form.validate()) {

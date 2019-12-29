@@ -14,24 +14,25 @@ use Illuminate\Http\Request;
 */
 
 Route::post('login', 'AuthController@login')->name('login');
+Route::post('signup', 'AuthController@signup')->name('signup');
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function () {
     
     
-    Route::post('signup', 'AuthController@signup')->name('signup');
+    Route::get('user','AuthController@user');
     Route::post('logout', 'AuthController@logout');
     
    
 
 });
 
-Route::group(['middleware' => 'api:auth'],function(){
+ 
 
         Route::apiResource('customers', 'CustomerController');
         Route::apiResource('actions', 'ActionController');
    
 
-});
+ 
  
