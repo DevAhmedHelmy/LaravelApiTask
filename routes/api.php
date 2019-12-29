@@ -27,6 +27,11 @@ Route::group([
 
 });
 
-Route::apiResource('customers', 'CustomerController');
+Route::group(['middleware' => 'api:auth'],function(){
 
-Route::post('actions','ActionController@store');
+        Route::apiResource('customers', 'CustomerController');
+        Route::apiResource('actions', 'ActionController');
+   
+
+});
+ 

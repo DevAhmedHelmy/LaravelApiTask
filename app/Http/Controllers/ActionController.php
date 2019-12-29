@@ -90,7 +90,16 @@ class ActionController extends Controller
      */
     public function update(Request $request, Action $action)
     {
-        $validated = $request->validated();
+        $validator = Validator::make($request->all(), [
+            'action'      => ['required',Rule::in(['call', 'visit'])],
+             
+            'customer_id'   => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+             
+            return response(["Error" ,'errors' => $validator->errors() ,422]);
+        }
+
         $action->update([
             'user_id' => \Auth::id(),
             'action' => $request->action,
@@ -107,7 +116,7 @@ class ActionController extends Controller
      */
     public function destroy(Action $action)
     {
-        $customer->delete();
+        $action->delete();
         return response('Deleted',Response::HTTP_ACCEPTED);
     }
 }

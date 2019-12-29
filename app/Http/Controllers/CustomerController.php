@@ -101,9 +101,19 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomerRequest $request, Customer $customer)
+    public function update(Request $request, Customer $customer)
     {
-        
+        $validator = Validator::make($request->all(), [
+            'name'      => 'required',
+            'email'     => 'required|email',
+            'phone'     => 'required',
+            'address'   => 'required',
+            'type'      => ['required',Rule::in(['individual', 'corporate'])],
+        ]);
+        if ($validator->fails()) {
+             
+            return response(["Error" ,'errors' => $validator->errors() ,422]);
+        }
          $customer->update([
                 'name' => $request->name,
                 'user_id' => \Auth::id(),

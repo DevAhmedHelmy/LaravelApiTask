@@ -206,10 +206,11 @@ export default {
                 })
           },
           updateCustomer(customerId){
-            
-            axios.patch('/api/customers/'+customerId,this.form)
+            console.log(customerId)
+            axios.put('/api/customers/'+customerId,this.form)
             .then(res => {
-                console.log(res.data) 
+                this.getCustomers();
+                this.dialog = false
                  
               })
         .catch(function (error) {

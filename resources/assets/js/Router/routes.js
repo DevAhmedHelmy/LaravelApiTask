@@ -21,6 +21,16 @@ let routes = [
         component: require('../components/login/Signup.vue').default
     },
     {
+        path: '/about',
+        name:'about',
+        component: require('../components/pages/AboutPage.vue').default
+    },
+    {
+        path: '/contact',
+        name:'contact',
+        component: require('../components/pages/Contact.vue').default
+    },
+    {
         path: '/create',
         name:'AddCustomer',
         component: require('../components/pages/customers/Create.vue').default
