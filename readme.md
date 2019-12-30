@@ -7,6 +7,12 @@
   *laravel 5.8
 </p>
 <p> 
+  *use factories and seeder
+</p>
+<p> 
+  *use api Resources
+</p>
+<p> 
   *jwt authentication
 </p>
 
@@ -24,7 +30,7 @@
 </p>
 
 
-<p>***** How to use ***</p>
+<p>***** How to run project ***</p>
 
 <p>Clone the repository with git clone</p>
 
