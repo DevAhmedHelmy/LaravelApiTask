@@ -42,6 +42,8 @@
 
 <p>php artisan jwt:secret</p>
 
+<p>creaet database</p>
+
 <p>Run php artisan migrate</p>
  
 <p>Run npm install</p>
