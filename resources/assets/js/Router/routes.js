@@ -50,12 +50,7 @@ let routes = [
         name:'EditCustomer',
         component: require('../components/pages/customers/Edit.vue').default
     },
-    {
-        path: '/',
-        redirect: {
-          name: 'customers',
-        },
-      },
+     
 ]
 
 export default new VueRouter({
